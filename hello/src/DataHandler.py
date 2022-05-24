@@ -9,6 +9,9 @@ import random as r
 from hello.src import DataClass
 from hello.src import model as m
 
+from mdutils.mdutils import MdUtils
+from mdutils import Html
+
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 #dataclass can be changed in anoteher class
@@ -120,17 +123,62 @@ def categorize(confidence_threshold, train_ds):
              + str(confidence_threshold * 100) + "% confident"):
             os.remove(os.path.join("moreThan"
              + str(confidence_threshold * 100) + "% confident",f))
+
+    mdFile = MdUtils(file_name="Confidence and Accuracy Report", title="Confidence and Accuracy Report")
+    above_threshold = list()
+    below_threshold = list()
     for file in os.listdir(testing_directory_name):
         img = tf.keras.utils.load_img(testing_directory_name + "\\" + file, target_size=(data.width_pixels, data.height_pixels))
         img_array = tf.keras.utils.img_to_array(img)
         prediction, confidence = m.makePrediction( img_array, train_ds.class_names)
-        if confidence < confidence_threshold * 100:
+        """if confidence < confidence_threshold * 100:
             shutil.copyfile(testing_directory_name + "\\" + file,    "lessThan"
          + str(confidence_threshold * 100) + "% confident\\" + str(round(confidence,2)) + "Prediction;" + prediction + "Actual;" + file)
         else:
             shutil.copyfile(testing_directory_name + "\\" + file, "moreThan"
                             + str(confidence_threshold * 100) + "% confident\\" + str(
-                round(confidence, 2)) + "Prediction;" + prediction + "Actual;" + file)
+                round(confidence, 2)) + "Prediction;" + prediction + "Actual;" + file)"""
+        if confidence < confidence_threshold*100:
+            # add the values to the arrays
+            below_threshold.append((confidence, prediction, file, testing_directory_name + "\\" + file))
+        else:
+            above_threshold.append((confidence, prediction, file, testing_directory_name + "\\" + file))
+    #print("AT", above_threshold)
+    above_avg_accuracy, above_avg_confidence = caluclate_average(above_threshold)
+    below_avg_accuracy, below_avg_confidence = caluclate_average(below_threshold)
+    mdFile.new_header(level=1, title="Confidence/Accuracy Above the Threshold")
+    mdFile.new_paragraph("The average confidence level above the threshold is: " + str(above_avg_confidence))
+    mdFile.new_paragraph("The average accuracy level above the threshold is: " + str(above_avg_accuracy))
+    mdFile.new_paragraph("The data is in Appendix A")
+
+    mdFile.new_header(level=2, title="Confidence/Accuracy Below the Threshold")
+    mdFile.new_paragraph("The average confidence level below the threshold is: " + str(below_avg_confidence))
+    mdFile.new_paragraph("The average accuracy level below the threshold is: " + str(below_avg_accuracy))
+    mdFile.new_paragraph("The data is in Appendix B")
+
+    mdFile.new_header(level=3, title="Appendix A")
+    for i in above_threshold:
+        mdFile.write("Path to Image: "+ str(i[3])+"\t"+"Confidence Level: " + str(i[0])+"\t"+"Predicted Label: "+str(i[1])+"\t"+"Actual Label: "+str(i[2])+"\n")
+
+    mdFile.new_header(level=4, title="Appendix B")
+    for i in below_threshold:
+        mdFile.write("Path to Image: "+ str(i[3])+"\t"+"Confidence Level: " + str(i[0])+"\t"+"Predicted Label: "+str(i[1])+"\t"+"Actual Label: "+str(i[2])+"\n")
+    mdFile.create_md_file()
+
+def caluclate_average(threshold_list):
+    avg_confidence = 0
+    avg_accuracy = 0
+    counter = 0
+    #print(threshold_list)
+    for i in threshold_list:
+        counter += 1
+        avg_confidence += i[0]
+        if i[1] == i[2]:
+            avg_accuracy += 1
+    if counter == 0:
+        return 0, 0
+    return avg_accuracy/counter, avg_confidence/counter
+
 
 
 if __name__ == "__main__":
