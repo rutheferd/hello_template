@@ -6,8 +6,5 @@ setuptools
 tensorflow
 pillow
 matplotlib
-math
-os
-opencv
+opencv-python
 numpy
-random

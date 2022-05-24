@@ -1,6 +1,9 @@
 import click
 from hello.src import there_command
-from hello.src import model
+from hello.src import model as m
+from hello.src import DataClass
+from hello.src import DataHandler as DH
+import os
 
 @click.group()
 @click.version_option(package_name="image_classifier")
@@ -8,16 +11,14 @@ def main():
     """Image Classifier is a CLI tool that creates a machine learning model to classify images"""
     #model.
     pass
-"""
+
 @click.option(
     "--model",
     "-m",
-    required=True,
-    type=str,
-    is_flag=True,
-    help = "Adds a model that will be tested.",
+    type=click.STRING,
+    help="If a model exists then use the model that will be tested.",
 )
-"""
+
 @click.option(
     "--training",
     "-tr",
@@ -48,19 +49,78 @@ def main():
     #is_flag=True,
     help = "Changes the batch number that will be used during training.",
 )
+@click.option(
+    "--height",
+    "-h",
+    type=int,
+    #is_flag=True,
+    help = "Changes the height of the images during training.",
+)
+@click.option(
+    "--width",
+    "-w",
+    type=int,
+    #is_flag=True,
+    help = "Changes the width of the images during training.",
+)
 @main.command()
-def model(training, testing, batch, epocs):
+def model(training, testing, batch, epocs, model, height, width):
     # Make a call to the model if it needs to be trained and saved somewhere
     epocsV = 8
     batchV = 32
+    heightV = 400
+    widthV = 400
+    modelV = ""
+    trainingV = ""
+    testingV = ""
+
+    '''
     print("Training", training)
     print("Testing", testing)
+    '''
+
     if epocs:
         epocsV = epocs
-        print(epocs)
+        #print(epocs)
     if batch:
         batchV = batch
-        print(batch)
+        #print(batch)
+    if height:
+        heightV = height
+        #print(heightV)
+    if width:
+        widthV = width
+        #print(weightV)
+    if model:
+        # if mode is not in correct directory throw an exception
+        if not os.path.isdir(model):
+            raise Exception("Model is not in a directory.")
+        elif not os.path.exists(model):
+            raise Exception("This path does not exist.")
+        modelV = model
+        print(model)
+    if training:
+        # if mode is not in correct directory throw an exception
+        if not os.path.isdir(training):
+            raise Exception("Training data set is not in a directory.")
+        elif not os.path.exists(training):
+            raise Exception("This path does not exist.")
+        trainingV = training
+        print(training)
+    if testing:
+        # if mode is not in correct directory throw an exception
+        if not os.path.isdir(testing):
+            raise Exception("The testing data set is not in a directory.")
+        elif not os.path.exists(testing):
+            raise Exception("This path does not exist.")
+        testingV = testing
+        print(testing)
+
+    m.runNewModel(epocsV, batchV, trainingV, testingV, heightV, widthV, modelV)
+
+    return
+
+
 
 if __name__ == "__main__":
     main()

@@ -22,7 +22,7 @@ dependency_links = [
 ]
 
 setup(
-    name="hello_template",
+    name="image_classifier_cli",
     description="Hello Template is a quick example and template for easily starting a pypi project.",
     include_package_data=True,
     package_data={"": ["*.txt"]},
