@@ -1,36 +1,66 @@
 import click
 from hello.src import there_command
-
+from hello.src import model
 
 @click.group()
-@click.version_option(package_name="hello_template")
+@click.version_option(package_name="image_classifier")
 def main():
-    """Hello is a CLI tool for creating a custom greeting to send to friend."""
+    """Image Classifier is a CLI tool that creates a machine learning model to classify images"""
+    #model.
     pass
-
-
-# Note below that I am only using options, the click.argument can also be used but has limited capability.
-# I generally like to use click.option and setting the option flag to required, as seen in the name option.
+"""
 @click.option(
-    # Notice that this has the is_flag option, this means that only the marker
-    # will be used to trigger this option.
-    "--greeting",
-    "-g",
+    "--model",
+    "-m",
+    required=True,
+    type=str,
     is_flag=True,
-    help="Adds a greeting to the final output",
+    help = "Adds a model that will be tested.",
 )
+"""
 @click.option(
-    "--name",
-    "-n",
+    "--training",
+    "-tr",
     type=click.STRING,
     required=True,
-    help="Adds the name to the final output.",
+    #is_flag=True,
+    help="Adds the data that the model will be trained on.",
+)
+@click.option(
+    "--testing",
+    "-te",
+    type=click.STRING,
+    required=True,
+    #is_flag=True,
+    help = "Adds the data that the model will be tested on.",
+)
+@click.option(
+    "--epocs",
+    "-e",
+    type=int,
+    #is_flag=True,
+    help = "Changes the number of epocs that will be done during training.",
+)
+@click.option(
+    "--batch",
+    "-b",
+    type=int,
+    #is_flag=True,
+    help = "Changes the batch number that will be used during training.",
 )
 @main.command()
-def there(name, greeting):
-    """Create a Greeting to Send to a Friend!"""
-    there_command.run(name, greeting)
-
+def model(training, testing, batch, epocs):
+    # Make a call to the model if it needs to be trained and saved somewhere
+    epocsV = 8
+    batchV = 32
+    print("Training", training)
+    print("Testing", testing)
+    if epocs:
+        epocsV = epocs
+        print(epocs)
+    if batch:
+        batchV = batch
+        print(batch)
 
 if __name__ == "__main__":
     main()

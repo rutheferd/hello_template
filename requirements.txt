@@ -3,3 +3,11 @@ black
 flake8
 pre-commit
 setuptools
+tensorflow
+pillow
+matplotlib
+math
+os
+opencv
+numpy
+random
