@@ -57,6 +57,13 @@ def main():
     help = "Changes the height of the images during training.",
 )
 @click.option(
+    "--confidence_threshold",
+    "-ct",
+    type=int,
+    #is_flag=True,
+    help = "Changes the height of the images during training.",
+)
+@click.option(
     "--width",
     "-w",
     type=int,
@@ -64,7 +71,7 @@ def main():
     help = "Changes the width of the images during training.",
 )
 @main.command()
-def model(training, testing, batch, epocs, model, height, width):
+def model(training, testing, batch, epocs, model, height, width, confidence_threshold):
     # Make a call to the model if it needs to be trained and saved somewhere
     epocsV = 8
     batchV = 32
@@ -73,6 +80,7 @@ def model(training, testing, batch, epocs, model, height, width):
     modelV = ""
     trainingV = ""
     testingV = ""
+    ctV = -1
 
     '''
     print("Training", training)
@@ -82,6 +90,9 @@ def model(training, testing, batch, epocs, model, height, width):
     if epocs:
         epocsV = epocs
         #print(epocs)
+    if confidence_threshold:
+        ctV = confidence_threshold
+        #print(confidence_threshold)
     if batch:
         batchV = batch
         #print(batch)
@@ -116,7 +127,7 @@ def model(training, testing, batch, epocs, model, height, width):
         testingV = testing
         print(testing)
 
-    m.runNewModel(epocsV, batchV, trainingV, testingV, heightV, widthV, modelV)
+    m.runNewModel(epocsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV)
 
     return
 
