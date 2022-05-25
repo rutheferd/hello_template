@@ -20,11 +20,12 @@ class Parameters(metaclass=Singleton):
     training_file: str = ""
     test_file: str = ""
     model_file: str = ""
+    num_confidence: int = -1
 
 
 
 
 
 
-data = Parameters(2,10,400,400, training_file="Grapevine_Leaves_Image_Dataset", test_file="testing_set\\Grapevine",
-                            model_file= "CDSavedModel" )
+#data = Parameters(2,10,400,400, training_file="Grapevine_Leaves_Image_Dataset", test_file="testing_set\\Grapevine",
+#                            model_file= "CDSavedModel" )

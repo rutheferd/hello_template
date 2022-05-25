@@ -12,6 +12,8 @@ import keras.layers
 # I'm not sure if the size of the videos is set, if not these variables can be adaptive. 1 is a place holder
 from hello.src import DataClass
 from hello.src import DataHandler as DH
+from hello.src.logger import logger
+import logging
 
 """
 TODO:
@@ -19,8 +21,6 @@ Make sure all different size images in the input parameter sizes change
 
 other solution: insert parameters in the application
 """
-
-
 
 
 data = DataClass.Parameters()
@@ -31,6 +31,8 @@ except:
 # This model takes in an input based on the video size and outputs based on the number of different labels
 # in the dataset
 def createModel(num_labels):
+    logger.info("Generating model")
+
     x_pixels = data.width_pixels
     y_pixels = data.height_pixels
 
@@ -46,9 +48,11 @@ def createModel(num_labels):
     model.add(tf.keras.layers.Flatten())
     model.add(tf.keras.layers.Dropout(0.2))
     model.add(tf.keras.layers.Dense(units=64, activation='relu'))
+    model.add(tf.keras.layers.Dropout(0.2))
+    model.add(tf.keras.layers.Dense(units=64, activation='relu'))
     model.add(tf.keras.layers.Dense(units = num_labels))
 
-
+    logger.info("Compiling model")
 
     model.compile(optimizer = 'adam',
                   loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits = True),
@@ -61,13 +65,16 @@ def createModel(num_labels):
 #This function trains the model that is passed in an plots loss and accuracy of the training and validation sets
 def trainModel(train_dataset, validation_dataset):
     num_epochs = data.num_epochs
+    logger.info("Training model")
     history = model.fit(
         train_dataset,
         validation_data =validation_dataset,
         epochs = num_epochs
     )
-    print(train_dataset.class_names)
     #I can understand only what's self-explanitory
+    logger.info("Finished Training")
+    logger.info("Plotting accuracy and loss of training and validation data")
+
     acc = history.history['accuracy']
     val_acc = history.history['val_accuracy']
 
@@ -91,7 +98,7 @@ def trainModel(train_dataset, validation_dataset):
     plt.show()
 
 #def makePrediction(model, image, class_names):
-def makePrediction( image, class_names):
+def makePrediction(image, class_names):
     """height = 400
     width = 400
     img = tf.keras.utils.load_img(image, target_size = (height, width))
@@ -105,6 +112,8 @@ def makePrediction( image, class_names):
     #     "test1.jpg", target_size = (400,400)
     # )
     # image_array = tf.keras.utils.img_to_array(img)
+
+
 
     image_array = tf.keras.utils.img_to_array(image)
 
@@ -129,7 +138,16 @@ def makePrediction( image, class_names):
 
     return class_names[np.argmax(score)], 100 * np.max(score)
 
-def runNewModel(numEpocs, numBatchSize, trainingPath, testingPath, height, width, modelPath):
+
+
+def runNewModel(numEpocs, numBatchSize, trainingPath, testingPath, height, width, modelPath, conf_thresh_val):
+    logging.basicConfig(
+        format="[%(asctime)s] %(levelname)s: %(message)s",
+        datefmt="%m/%d/%Y %I:%M:%S %p",
+        filename="logs.log",
+        level=logging.INFO
+    )
+    
     # set the data here
     d = DataClass.Parameters()
     #numEpocs, numBatchSize, height, width, trainingPath, testingPath, modelPath
@@ -142,15 +160,21 @@ def runNewModel(numEpocs, numBatchSize, trainingPath, testingPath, height, width
     d.model_file = modelPath
     if modelPath == "":
         training_d, validation = DH.change_input()
+        if conf_thresh_val == -1:
+            conf_thresh_val = 1/len(training_d.class_names)
+        d.num_confidence = conf_thresh_val
         model = createModel(len(training_d.class_names))
         trainModel(training_d, validation)
-        DH.categorize(0.6, training_d)
+        DH.categorize(d.num_confidence, training_d)
     else:
         training_d, validation = DH.change_input()
+        if conf_thresh_val == -1:
+            conf_thresh_val = 1/len(training_d.class_names)
+        d.num_confidence = conf_thresh_val
         model = keras.models.load_model(modelPath)
         model.summary()
         trainModel(training_d, validation)
-        DH.categorize(0.6, training_d)
+        DH.categorize(d.num_confidence, training_d)
     return
 
 
