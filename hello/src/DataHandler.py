@@ -108,6 +108,7 @@ def gathering_data_confidence(train_ds):
 
 def categorize(confidence_threshold, train_ds):
     testing_directory_name = data.test_file
+    """
     logger.info("Making directories using " + str(confidence_threshold * 100) + " threshold")
     try:
         os.mkdir("lessThan"
@@ -128,14 +129,19 @@ def categorize(confidence_threshold, train_ds):
              + str(confidence_threshold * 100) + "% confident"):
             os.remove(os.path.join("moreThan"
              + str(confidence_threshold * 100) + "% confident",f))
-        logger.info("Cleared more than confidence threshold directory")
+        logger.info("Cleared more than confidence threshold directory")"""
     logger.info("Making predictions on test dataset and organizing entries into confidence directories")
     mdFile = MdUtils(file_name="Confidence and Accuracy Report", title="Confidence and Accuracy Report")
+    mdFile.new_header(level=1, title="Threshold Value")
+    mdFile.new_paragraph("The threshold value is "+ str(confidence_threshold*100)+ "." )
     above_threshold = list()
     below_threshold = list()
+    print("list",testing_directory_name)
     for sub in os.listdir(testing_directory_name):
-        for file in sub:
-            img = tf.keras.utils.load_img(testing_directory_name + "\\" + file, target_size=(data.width_pixels, data.height_pixels))
+        print("sub",sub)
+        for file in os.listdir(testing_directory_name + "\\" + sub):
+            print(file)
+            img = tf.keras.utils.load_img(testing_directory_name + "\\" + sub + "\\" + file, target_size=(data.width_pixels, data.height_pixels))
             img_array = tf.keras.utils.img_to_array(img)
             prediction, confidence = m.makePrediction( img_array, train_ds.class_names)
             """if confidence < confidence_threshold * 100:
@@ -153,21 +159,21 @@ def categorize(confidence_threshold, train_ds):
     #print("AT", above_threshold)
     above_avg_accuracy, above_avg_confidence = caluclate_average(above_threshold)
     below_avg_accuracy, below_avg_confidence = caluclate_average(below_threshold)
-    mdFile.new_header(level=1, title="Confidence/Accuracy Above the Threshold")
+    mdFile.new_header(level=2, title="Confidence/Accuracy Above the Threshold")
     mdFile.new_paragraph("The average confidence level above the threshold is: " + str(above_avg_confidence))
     mdFile.new_paragraph("The average accuracy level above the threshold is: " + str(above_avg_accuracy))
     mdFile.new_paragraph("The data is in Appendix A")
 
-    mdFile.new_header(level=2, title="Confidence/Accuracy Below the Threshold")
+    mdFile.new_header(level=3, title="Confidence/Accuracy Below the Threshold")
     mdFile.new_paragraph("The average confidence level below the threshold is: " + str(below_avg_confidence))
     mdFile.new_paragraph("The average accuracy level below the threshold is: " + str(below_avg_accuracy))
     mdFile.new_paragraph("The data is in Appendix B")
 
-    mdFile.new_header(level=3, title="Appendix A")
+    mdFile.new_header(level=4, title="Appendix A")
     for i in above_threshold:
         mdFile.write("Path to Image: "+ str(i[3])+"\t"+"Confidence Level: " + str(i[0])+"\t"+"Predicted Label: "+str(i[1])+"\t"+"Actual Label: "+str(i[2])+"\n")
 
-    mdFile.new_header(level=4, title="Appendix B")
+    mdFile.new_header(level=5, title="Appendix B")
     for i in below_threshold:
         mdFile.write("Path to Image: "+ str(i[3])+"\t"+"Confidence Level: " + str(i[0])+"\t"+"Predicted Label: "+str(i[1])+"\t"+"Actual Label: "+str(i[2])+"\n")
     mdFile.create_md_file()
