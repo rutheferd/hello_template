@@ -9,8 +9,9 @@ import random as r
 from hello.src import DataClass
 from hello.src import model as m
 
-from mdutils.mdutils import MdUtils
+import mdutils
 from mdutils import Html
+from mdutils.mdutils import MdUtils
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 

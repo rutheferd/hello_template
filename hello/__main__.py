@@ -1,7 +1,9 @@
 import click
-from hello.src import there_command
-from hello.src import model as m
+
 from hello.src import DataClass
+from hello.src import model as m
+
+from hello.src import there_command
 from hello.src import DataHandler as DH
 import os
 
@@ -36,11 +38,11 @@ def main():
     help = "Adds the data that the model will be tested on.",
 )
 @click.option(
-    "--epocs",
+    "--epochs",
     "-e",
     type=int,
     #is_flag=True,
-    help = "Changes the number of epocs that will be done during training.",
+    help = "Changes the number of epochs that will be done during training.",
 )
 @click.option(
     "--batch",
@@ -64,9 +66,9 @@ def main():
     help = "Changes the width of the images during training.",
 )
 @main.command()
-def model(training, testing, batch, epocs, model, height, width):
+def model(training, testing, batch, epochs, model, height, width):
     # Make a call to the model if it needs to be trained and saved somewhere
-    epocsV = 8
+    epochsV = 8
     batchV = 32
     heightV = 400
     widthV = 400
@@ -79,9 +81,9 @@ def model(training, testing, batch, epocs, model, height, width):
     print("Testing", testing)
     '''
 
-    if epocs:
-        epocsV = epocs
-        #print(epocs)
+    if epochs:
+        epochsV = epochs
+        #print(epochs)
     if batch:
         batchV = batch
         #print(batch)
@@ -116,7 +118,7 @@ def model(training, testing, batch, epocs, model, height, width):
         testingV = testing
         print(testing)
 
-    m.runNewModel(epocsV, batchV, trainingV, testingV, heightV, widthV, modelV)
+    m.runNewModel(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV)
 
     return
 
