@@ -74,9 +74,8 @@ def main():
 )
 @main.command()
 
-def model(training, testing, batch, epochs, model, height, width, confidence_threshold):
+def model(training, testing, batch, epocs, model, height, width, confidence_threshold):
     # Make a call to the model if it needs to be trained and saved somewhere
-    print(epochs)
     epochsV = 8
     batchV = 32
     heightV = 400
@@ -92,8 +91,8 @@ def model(training, testing, batch, epochs, model, height, width, confidence_thr
     '''
 
 
-    if epochs:
-        epochsV = epochs
+    if epocs:
+        epocsV = epocs
         #print(epocs)
     if confidence_threshold:
         ctV = confidence_threshold
@@ -132,7 +131,7 @@ def model(training, testing, batch, epochs, model, height, width, confidence_thr
         testingV = testing
         print(testing)
 
-    m.runNewModel(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV)
+    m.runNewModel(epocsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV)
 
     return
 

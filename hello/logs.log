@@ -1,0 +1,106 @@
+[05/25/2022 10:33:08 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 10:33:10 AM] INFO: Generating model
+[05/25/2022 10:33:10 AM] INFO: Compiling model
+[05/25/2022 10:33:10 AM] INFO: Training model
+[05/25/2022 10:36:48 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 10:36:50 AM] INFO: Generating model
+[05/25/2022 10:36:50 AM] INFO: Compiling model
+[05/25/2022 10:36:50 AM] INFO: Training model
+[05/25/2022 10:39:03 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 10:39:05 AM] INFO: Generating model
+[05/25/2022 10:39:05 AM] INFO: Compiling model
+[05/25/2022 10:39:05 AM] INFO: Training model
+[05/25/2022 10:39:22 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 10:39:24 AM] INFO: Generating model
+[05/25/2022 10:39:24 AM] INFO: Compiling model
+[05/25/2022 10:39:24 AM] INFO: Training model
+[05/25/2022 10:44:31 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 10:44:33 AM] INFO: Generating model
+[05/25/2022 10:44:33 AM] INFO: Compiling model
+[05/25/2022 10:44:33 AM] INFO: Training model
+[05/25/2022 10:45:42 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 10:45:43 AM] INFO: Generating model
+[05/25/2022 10:45:44 AM] INFO: Compiling model
+[05/25/2022 10:45:44 AM] INFO: Training model
+[05/25/2022 10:46:23 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 10:46:25 AM] INFO: Generating model
+[05/25/2022 10:46:25 AM] INFO: Compiling model
+[05/25/2022 10:46:25 AM] INFO: Training model
+[05/25/2022 10:46:53 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 10:46:55 AM] INFO: Generating model
+[05/25/2022 10:46:55 AM] INFO: Compiling model
+[05/25/2022 10:46:56 AM] INFO: Training model
+[05/25/2022 10:49:23 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 10:49:26 AM] INFO: Generating model
+[05/25/2022 10:49:27 AM] INFO: Compiling model
+[05/25/2022 10:49:27 AM] INFO: Training model
+[05/25/2022 10:51:13 AM] INFO: Finished Training
+[05/25/2022 10:51:13 AM] INFO: Plotting accuracy and loss of training and validation data
+[05/25/2022 10:51:16 AM] INFO: Making predictions on test dataset and organizing entries into confidence directories
+[05/25/2022 10:55:47 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 10:55:48 AM] INFO: Generating model
+[05/25/2022 10:55:49 AM] INFO: Compiling model
+[05/25/2022 10:55:49 AM] INFO: Training model
+[05/25/2022 10:56:06 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 10:56:07 AM] INFO: Generating model
+[05/25/2022 10:56:08 AM] INFO: Compiling model
+[05/25/2022 10:56:08 AM] INFO: Training model
+[05/25/2022 11:00:40 AM] INFO: Finished Training
+[05/25/2022 11:00:40 AM] INFO: Plotting accuracy and loss of training and validation data
+[05/25/2022 11:00:43 AM] INFO: Making predictions on test dataset and organizing entries into confidence directories
+[05/25/2022 11:03:47 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 11:03:47 AM] INFO: Generating model
+[05/25/2022 11:03:47 AM] INFO: Compiling model
+[05/25/2022 11:03:47 AM] INFO: Training model
+[05/25/2022 11:03:51 AM] INFO: Finished Training
+[05/25/2022 11:03:51 AM] INFO: Plotting accuracy and loss of training and validation data
+[05/25/2022 11:04:00 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 11:04:01 AM] INFO: Generating model
+[05/25/2022 11:04:01 AM] INFO: Compiling model
+[05/25/2022 11:04:01 AM] INFO: Training model
+[05/25/2022 11:04:30 AM] INFO: Finished Training
+[05/25/2022 11:04:30 AM] INFO: Plotting accuracy and loss of training and validation data
+[05/25/2022 11:04:34 AM] INFO: Making predictions on test dataset and organizing entries into confidence directories
+[05/25/2022 11:06:45 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 11:06:46 AM] INFO: Generating model
+[05/25/2022 11:06:46 AM] INFO: Compiling model
+[05/25/2022 11:06:46 AM] INFO: Training model
+[05/25/2022 11:07:14 AM] INFO: Finished Training
+[05/25/2022 11:07:14 AM] INFO: Plotting accuracy and loss of training and validation data
+[05/25/2022 11:07:24 AM] INFO: Making predictions on test dataset and organizing entries into confidence directories
+[05/25/2022 11:12:02 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 11:12:02 AM] INFO: Generating model
+[05/25/2022 11:12:02 AM] INFO: Compiling model
+[05/25/2022 11:12:02 AM] INFO: Training model
+[05/25/2022 11:12:33 AM] INFO: Finished Training
+[05/25/2022 11:12:33 AM] INFO: Plotting accuracy and loss of training and validation data
+[05/25/2022 11:12:39 AM] INFO: Making predictions on test dataset and organizing entries into confidence directories
+[05/25/2022 11:15:22 AM] INFO: Finished predicting test data 
+[05/25/2022 11:18:50 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 11:18:50 AM] INFO: Generating model
+[05/25/2022 11:18:51 AM] INFO: Compiling model
+[05/25/2022 11:18:51 AM] INFO: Training model
+[05/25/2022 11:19:19 AM] INFO: Finished Training
+[05/25/2022 11:19:19 AM] INFO: Plotting accuracy and loss of training and validation data
+[05/25/2022 11:19:21 AM] INFO: Making predictions on test dataset and organizing entries into confidence directories
+[05/25/2022 11:19:29 AM] INFO: Finished predicting test data 
+[05/25/2022 11:25:30 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 11:25:30 AM] INFO: Generating model
+[05/25/2022 11:25:30 AM] INFO: Compiling model
+[05/25/2022 11:25:30 AM] INFO: Training model
+[05/25/2022 11:25:47 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 11:25:47 AM] INFO: Generating model
+[05/25/2022 11:25:47 AM] INFO: Compiling model
+[05/25/2022 11:25:47 AM] INFO: Training model
+[05/25/2022 11:25:54 AM] INFO: Finished Training
+[05/25/2022 11:25:54 AM] INFO: Plotting accuracy and loss of training and validation data
+[05/25/2022 11:25:57 AM] INFO: Making predictions on test dataset and organizing entries into confidence directories
+[05/25/2022 11:26:04 AM] INFO: Finished predicting test data 
+[05/25/2022 11:28:56 AM] INFO: Converting directory into training and validation datasets
+[05/25/2022 11:28:56 AM] INFO: Generating model
+[05/25/2022 11:28:56 AM] INFO: Compiling model
+[05/25/2022 11:28:56 AM] INFO: Training model
+[05/25/2022 11:29:03 AM] INFO: Finished Training
+[05/25/2022 11:29:03 AM] INFO: Plotting accuracy and loss of training and validation data
+[05/25/2022 11:29:04 AM] INFO: Making predictions on test dataset and organizing entries into confidence directories
+[05/25/2022 11:29:11 AM] INFO: Finished predicting test data 
