@@ -14,6 +14,7 @@ import mdutils
 from mdutils import Html
 from mdutils.mdutils import MdUtils
 
+
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 #dataclass can be changed in anoteher class
@@ -107,7 +108,7 @@ def gathering_data_confidence(train_ds):
                     # add the prediction for that file in the colorV3 list
                     predict_colorsV3.append(prediction)
 
-def categorize(confidence_threshold, train_ds):
+def categorize(confidence_threshold, class_names):
     testing_directory_name = data.test_file
     """
     logger.info("Making directories using " + str(confidence_threshold * 100) + " threshold")
@@ -132,7 +133,7 @@ def categorize(confidence_threshold, train_ds):
              + str(confidence_threshold * 100) + "% confident",f))
         logger.info("Cleared more than confidence threshold directory")"""
     logger.info("Making predictions on test dataset and organizing entries into confidence directories")
-    mdFile = MdUtils(file_name="Confidence and Accuracy Report", title="Confidence and Accuracy Report")
+    mdFile = MdUtils(file_name=data.output_location+"\\Confidence and Accuracy Report", title="Confidence and Accuracy Report")
     mdFile.new_header(level=1, title="Threshold Value")
     mdFile.new_paragraph("The threshold value is "+ str(confidence_threshold*100)+ "." )
     above_threshold = list()
@@ -144,7 +145,7 @@ def categorize(confidence_threshold, train_ds):
             print(file)
             img = tf.keras.utils.load_img(testing_directory_name + "\\" + sub + "\\" + file, target_size=(data.width_pixels, data.height_pixels))
             img_array = tf.keras.utils.img_to_array(img)
-            prediction, confidence = m.makePrediction( img_array, train_ds.class_names)
+            prediction, confidence = m.makePrediction( img_array, class_names)
             """if confidence < confidence_threshold * 100:
                 shutil.copyfile(testing_directory_name + "\\" + file,    "lessThan"
              + str(confidence_threshold * 100) + "% confident\\" + str(round(confidence,2)) + "Prediction;" + prediction + "Actual;" + file)
@@ -196,7 +197,6 @@ def caluclate_average(threshold_list):
     if counter == 0:
         return 0, 0
     return avg_accuracy/counter, avg_confidence/counter
-
 
 
 if __name__ == "__main__":
