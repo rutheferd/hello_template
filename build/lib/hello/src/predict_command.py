@@ -1,4 +1,3 @@
-import logging
 import os
 from hello.src import DataHandler as DH
 from hello.src import DataClass
@@ -14,16 +13,7 @@ except:
     print()
 
 def run(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outputV,saveV):
-
     predict(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outputV,saveV)
-    logging.basicConfig(
-        format="[%(asctime)s] %(levelname)s: %(message)s",
-        datefmt="%m/%d/%Y %I:%M:%S %p",
-        filename=outputV+"/logs.log",
-        level=logging.INFO
-    )
-    LOGGER = logging.getLogger()
-    LOGGER.info('Master runs')
     return
 
 def predict(numEpocs, numBatchSize, trainingPath, testingPath, height, width, modelPath, conf_thresh_val, output_loc, saveV):

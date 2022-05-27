@@ -8,7 +8,10 @@ import random as r
 
 from hello.src import DataClass
 from hello.src import model as m
-from hello.src.logger import logger
+#from hello.src.logger import logger
+
+import logging
+LOGGER = logging.getLogger()
 
 import mdutils
 from mdutils import Html
@@ -19,9 +22,10 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 #dataclass can be changed in anoteher class
 data  = DataClass.Parameters()
+
 def change_input():
     #check the different folders in the original input file name
-    logger.info("Converting directory into training and validation datasets")
+    LOGGER.info("Converting directory into training and validation datasets")
     input_file = data.training_file
     print(input_file)
     batch_size = data.batch_size
@@ -59,6 +63,7 @@ def scale_resize(image, label):
     image = tf.image.convert_image_dtype(image, tf.float32)
     image = tf.image.resize(image,(224,224))
     return (image,label)
+
 def scale_resize_dataset(dataset):
     ds = (
         dataset
@@ -77,7 +82,7 @@ def testing(file_name, path, height, width,modelInput,train_ds):
     """
     #"C:\\Users\\sranjan31\\PycharmProjects\\gtriScreenDifferentiation\\ColorsV3\\Red\\"+
     #path = os.getcwd() + "\\" + directory_name + "\\" + testing_name + "\\" + file_name
-    path_file = path + "\\" + file_name
+    path_file = path + "/" + file_name
     img = tf.keras.utils.load_img(path_file, target_size = (data.height_pixels, data.width_pixels))
     img_array = tf.keras.utils.img_to_array(img)
     predictions = m.makePrediction(modelInput, img_array, train_ds.class_names)
@@ -92,11 +97,11 @@ def gathering_data_confidence(train_ds):
     count = 0
     predict_colorsV2 = list()
     predict_colorsV3 = list()
-    logger.info("Making predictions on V2 and V3 colors")
+    LOGGER.info("Making predictions on V2 and V3 colors")
     for directory_name in test_directory: #colorsV# directory
         count += 1
         for testing_name in train_ds.class_names: #red, green, blue
-            path = test_directory + "\\" + testing_name
+            path = test_directory + "/" + testing_name
             files = os.listdir(path)
             for file_name in files: #files in red,green, or blue directory
                 #print(file_name)
@@ -132,8 +137,8 @@ def categorize(confidence_threshold, class_names):
             os.remove(os.path.join("moreThan"
              + str(confidence_threshold * 100) + "% confident",f))
         logger.info("Cleared more than confidence threshold directory")"""
-    logger.info("Making predictions on test dataset and organizing entries into confidence directories")
-    mdFile = MdUtils(file_name=data.output_location+"\\Confidence and Accuracy Report", title="Confidence and Accuracy Report")
+    LOGGER.info("Making predictions on test dataset and organizing entries into confidence directories")
+    mdFile = MdUtils(file_name=data.output_location+"/Confidence and Accuracy Report", title="Confidence and Accuracy Report")
     mdFile.new_header(level=1, title="Threshold Value")
     mdFile.new_paragraph("The threshold value is "+ str(confidence_threshold*100)+ "." )
     above_threshold = list()
@@ -141,23 +146,16 @@ def categorize(confidence_threshold, class_names):
     print("list",testing_directory_name)
     for sub in os.listdir(testing_directory_name):
         print("sub",sub)
-        for file in os.listdir(testing_directory_name + "\\" + sub):
+        for file in os.listdir(testing_directory_name + "/" + sub):
             print(file)
-            img = tf.keras.utils.load_img(testing_directory_name + "\\" + sub + "\\" + file, target_size=(data.width_pixels, data.height_pixels))
+            img = tf.keras.utils.load_img(testing_directory_name + "/" + sub + "/" + file, target_size=(data.width_pixels, data.height_pixels))
             img_array = tf.keras.utils.img_to_array(img)
             prediction, confidence = m.makePrediction( img_array, class_names)
-            """if confidence < confidence_threshold * 100:
-                shutil.copyfile(testing_directory_name + "\\" + file,    "lessThan"
-             + str(confidence_threshold * 100) + "% confident\\" + str(round(confidence,2)) + "Prediction;" + prediction + "Actual;" + file)
-            else:
-                shutil.copyfile(testing_directory_name + "\\" + file, "moreThan"
-                                + str(confidence_threshold * 100) + "% confident\\" + str(
-                    round(confidence, 2)) + "Prediction;" + prediction + "Actual;" + file)"""
             if confidence < confidence_threshold*100:
                 # add the values to the arrays
-                below_threshold.append((confidence, prediction, sub, testing_directory_name + "\\" + sub + "\\" +file))
+                below_threshold.append((confidence, prediction, sub, testing_directory_name + "/" + sub + "/" +file))
             else:
-                above_threshold.append((confidence, prediction, sub, testing_directory_name + "\\" + sub + "\\" + file))
+                above_threshold.append((confidence, prediction, sub, testing_directory_name + "/" + sub + "/" + file))
     #print("AT", above_threshold)
     above_avg_accuracy, above_avg_confidence = caluclate_average(above_threshold)
     below_avg_accuracy, below_avg_confidence = caluclate_average(below_threshold)
@@ -182,7 +180,7 @@ def categorize(confidence_threshold, class_names):
     for i in below_threshold:
         mdFile.write("Path to Image: "+ str(i[3])+"\t"+"Confidence Level: " + str(i[0])+"\t"+"Predicted Label: "+str(i[1])+"\t"+"Actual Label: "+str(i[2])+"\n")
     mdFile.create_md_file()
-    logger.info("Finished predicting test data ")
+    LOGGER.info("Finished predicting test data ")
 
 def caluclate_average(threshold_list):
     avg_confidence = 0

@@ -7,9 +7,11 @@ hello/__main__.py
 hello/src/DataClass.py
 hello/src/DataHandler.py
 hello/src/__init__.py
-hello/src/logger.py
 hello/src/model.py
+hello/src/predict_command.py
+hello/src/run_scripts.py
 hello/src/there_command.py
+hello/src/training_command.py
 image_classifier_cli.egg-info/PKG-INFO
 image_classifier_cli.egg-info/SOURCES.txt
 image_classifier_cli.egg-info/dependency_links.txt

@@ -1,3 +1,5 @@
+import shutil
+
 import tensorflow as tf
 import PIL
 import pathlib
@@ -5,6 +7,7 @@ from matplotlib import pyplot as plt
 from PIL import Image
 import numpy as np
 import cv2 as cv
+import os
 from keras.layers import MaxPooling2D
 from tensorflow import keras
 from keras import models
@@ -12,8 +15,9 @@ import keras.layers
 # I'm not sure if the size of the videos is set, if not these variables can be adaptive. 1 is a place holder
 from hello.src import DataClass
 from hello.src import DataHandler as DH
-from hello.src.logger import logger
+#from hello.src.logger import logger
 import logging
+LOGGER = logging.getLogger()
 
 """
 TODO:
@@ -31,7 +35,7 @@ except:
 # This model takes in an input based on the video size and outputs based on the number of different labels
 # in the dataset
 def createModel(num_labels):
-    logger.info("Generating model")
+    LOGGER.info("Generating model")
 
     x_pixels = data.width_pixels
     y_pixels = data.height_pixels
@@ -52,7 +56,7 @@ def createModel(num_labels):
     model.add(tf.keras.layers.Dense(units=64, activation='relu'))
     model.add(tf.keras.layers.Dense(units = num_labels))
 
-    logger.info("Compiling model")
+    LOGGER.info("Compiling model")
 
     model.compile(optimizer = 'adam',
                   loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits = True),
@@ -65,15 +69,15 @@ def createModel(num_labels):
 #This function trains the model that is passed in an plots loss and accuracy of the training and validation sets
 def trainModel(train_dataset, validation_dataset):
     num_epochs = data.num_epochs
-    logger.info("Training model")
+    LOGGER.info("Training model")
     history = model.fit(
         train_dataset,
         validation_data =validation_dataset,
         epochs = num_epochs
     )
     #I can understand only what's self-explanitory
-    logger.info("Finished Training")
-    logger.info("Plotting accuracy and loss of training and validation data")
+    LOGGER.info("Finished Training")
+    LOGGER.info("Plotting accuracy and loss of training and validation data")
 
     acc = history.history['accuracy']
     val_acc = history.history['val_accuracy']
@@ -95,8 +99,8 @@ def trainModel(train_dataset, validation_dataset):
     plt.plot(epochs_range, val_loss, label='Validation Loss')
     plt.legend(loc='upper right')
     plt.title('Training and Validation Loss')
+    plt.savefig(data.output_location+'/training_data.png')
     plt.show()
-
 #def makePrediction(model, image, class_names):
 def makePrediction(image, class_names):
     """height = 400
@@ -140,14 +144,25 @@ def makePrediction(image, class_names):
 
 
 
-def runNewModel(numEpocs, numBatchSize, trainingPath, testingPath, height, width, modelPath, conf_thresh_val):
-    logging.basicConfig(
+def run(numEpocs, numBatchSize, trainingPath, testingPath, height, width, modelPath, conf_thresh_val, output_loc):
+    if output_loc == "Output":
+        try:
+            os.mkdir("Output")
+            #logger.info("Make the Output directory")
+        except:
+            for f in os.listdir("Output"):
+                os.remove(os.path.join("Output", f))
+            #logger.info("Cleared Output directory")
+        print(os.getcwd())
+        #shutil.move(os.getcwd()+"logs.log", os.getcwd()+"Output")
+
+    """logging.basicConfig(
         format="[%(asctime)s] %(levelname)s: %(message)s",
         datefmt="%m/%d/%Y %I:%M:%S %p",
         filename="logs.log",
         level=logging.INFO
-    )
-    
+    )"""
+
     # set the data here
     d = DataClass.Parameters()
     #numEpocs, numBatchSize, height, width, trainingPath, testingPath, modelPath
@@ -158,6 +173,7 @@ def runNewModel(numEpocs, numBatchSize, trainingPath, testingPath, height, width
     d.training_file = trainingPath
     d.test_file = testingPath
     d.model_file = modelPath
+    d.output_location = output_loc
     if modelPath == "":
         training_d, validation = DH.change_input()
         if conf_thresh_val == -1:
@@ -175,6 +191,7 @@ def runNewModel(numEpocs, numBatchSize, trainingPath, testingPath, height, width
         model.summary()
         trainModel(training_d, validation)
         DH.categorize(d.num_confidence, training_d)
+
     return
 
 

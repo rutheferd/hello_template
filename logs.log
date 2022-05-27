@@ -1,0 +1,16 @@
+[05/26/2022 03:00:11 PM] INFO: Converting directory into training and validation datasets
+[05/26/2022 03:00:11 PM] INFO: Generating model
+[05/26/2022 03:00:11 PM] INFO: Compiling model
+[05/26/2022 03:00:11 PM] INFO: Training model
+[05/26/2022 03:00:27 PM] INFO: Finished Training
+[05/26/2022 03:00:27 PM] INFO: Plotting accuracy and loss of training and validation data
+[05/26/2022 03:00:31 PM] WARNING: Found untraced functions such as _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 2 of 2). These functions will not be directly callable after loading.
+[05/26/2022 03:00:32 PM] INFO: Assets written to: C:\Users\sranjan31\PycharmProjects\imgClassCLI\image_classifier_cli/Output/Model\assets
+[05/26/2022 03:03:39 PM] INFO: Converting directory into training and validation datasets
+[05/26/2022 03:03:39 PM] INFO: Generating model
+[05/26/2022 03:03:39 PM] INFO: Compiling model
+[05/26/2022 03:03:39 PM] INFO: Training model
+[05/26/2022 03:03:55 PM] INFO: Finished Training
+[05/26/2022 03:03:55 PM] INFO: Plotting accuracy and loss of training and validation data
+[05/26/2022 03:03:59 PM] WARNING: Found untraced functions such as _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 2 of 2). These functions will not be directly callable after loading.
+[05/26/2022 03:04:01 PM] INFO: Assets written to: C:\Users\sranjan31\PycharmProjects\imgClassCLI\image_classifier_cli/Output/Model\assets
