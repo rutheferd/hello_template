@@ -87,7 +87,6 @@ def train(training, batch, epochs, model, height, width, confidence_threshold, o
 
 @main.command()
 @click.option( "--model", "-m", type=click.STRING, required=True, help="If a model exists then use the model that will be tested.")
-@click.option("--training","-tr",type=click.STRING,help="Adds the data that the model will be trained on.")
 @click.option("--testing","-te",type=click.STRING, required=True, help = "Adds the data that the model will be tested on.")
 @click.option("--epochs","-e",type=int,help = "Changes the number of epochs that will be done during training.")
 @click.option("--batch","-b",type=int,help = "Changes the batch number that will be used during training.")
@@ -97,7 +96,7 @@ def train(training, batch, epochs, model, height, width, confidence_threshold, o
 @click.option("--output","-o",type=click.STRING,help="Changes where the file will be created to store analysis about the model creation process.")
 @click.option("--save_model", "-sm", type=click.STRING, help="Location of where the model will be saved if you want to save teh model.")
 
-def predict(training, testing, batch, epochs, model, height, width, confidence_threshold, output,save_model):
+def predict( testing, batch, epochs, model, height, width, confidence_threshold, output,save_model):
     # Make a call to the model if it needs to be trained and saved somewhere
     print(epochs)
     epochsV = 8
@@ -111,7 +110,6 @@ def predict(training, testing, batch, epochs, model, height, width, confidence_t
     outputV = "Output"
     saveV = ""
 
-    print("Training", training)
     print("Testing", testing)
 
     if save_model:
@@ -149,14 +147,6 @@ def predict(training, testing, batch, epochs, model, height, width, confidence_t
             raise FileNotFoundError("This path does not exist.")
         modelV = model
         #print(model)
-    if training:
-        # if mode is not in correct directory throw an exception
-        if not os.path.isdir(training):
-            raise ValueError("Training data set is not in a directory.")
-        elif not os.path.exists(training):
-            raise FileNotFoundError("This path does not exist.")
-        trainingV = training
-        #print(training)
     if testing:
         # if mode is not in correct directory throw an exception
         if not os.path.isdir(testing):

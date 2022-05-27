@@ -15,7 +15,7 @@ except:
 
 def run(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outputV,saveV):
 
-    predict(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outputV,saveV)
+    predict(epochsV, batchV, testingV, heightV, widthV, modelV, ctV, outputV,saveV)
     logging.basicConfig(
         format="[%(asctime)s] %(levelname)s: %(message)s",
         datefmt="%m/%d/%Y %I:%M:%S %p",
@@ -26,7 +26,7 @@ def run(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outp
     LOGGER.info('Master runs')
     return
 
-def predict(numEpocs, numBatchSize, trainingPath, testingPath, height, width, modelPath, conf_thresh_val, output_loc, saveV):
+def predict(numEpocs, numBatchSize, testingPath, height, width, modelPath, conf_thresh_val, output_loc, saveV):
     print("testing in runfile.")
 
     if output_loc == "Output":
@@ -37,10 +37,10 @@ def predict(numEpocs, numBatchSize, trainingPath, testingPath, height, width, mo
     d.batch_size = numBatchSize
     d.height_pixels = height
     d.width_pixels = width
-    d.training_file = trainingPath
     d.test_file = testingPath
     d.model_file = modelPath
     d.output_location = output_loc
+    d.model = keras.models.load_model(d.model_file)
     if modelPath == "":
         raise Exception("You must have a model to predict values.")
 
