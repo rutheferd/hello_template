@@ -1,4 +1,2 @@
-
-        [console_scripts]
-        hello=hello.__main__:main
-    
+[console_scripts]
+hello = hello.__main__:main

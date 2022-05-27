@@ -18,9 +18,13 @@ except:
 
 
 def run(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outputV,saveV):
-    print("I am here")
+    print("I am hereeee")
     if outputV == "Output":
-        shutil.rmtree(outputV)
+        #had to add this because if the output file didn't exist, it would fail
+        try:
+            shutil.rmtree(outputV)
+        except:
+            print("No output file found. Making one.")
         os.mkdir("Output")
         """for f in os.listdir("Output"):
             if os.path.isdir(outputV+"/"+f):
@@ -48,7 +52,6 @@ def run(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outp
 def train(numEpocs, numBatchSize, trainingPath, testingPath, height, width, modelPath, conf_thresh_val, output_loc, saveV):
     print("training in runfile.")
 
-
         # shutil.move(os.getcwd()+"logs.log", os.getcwd()+"Output")
 
     #raise Exception("just kidding")
@@ -72,6 +75,14 @@ def train(numEpocs, numBatchSize, trainingPath, testingPath, height, width, mode
         m.createModel(len(training_d.class_names))
         m.trainModel(training_d, validation)
     else:
+        model_name = data.model_file.rsplit('/',1)[-1]
+        global version_num
+        if(model_name.__contains__("Version")):
+            version_num = model_name[model_name.index("Version") + 7]
+            model_name = model_name[:model_name.index("Version") + 7] + str(int(version_num) + 1) + model_name[(model_name.index("Version") + 8):]
+        else:
+            model_name = model_name +"Version2"
+            version_num = 2
         training_d, validation = DH.change_input()
         if conf_thresh_val == -1:
             conf_thresh_val = 1 / len(training_d.class_names)
@@ -81,7 +92,7 @@ def train(numEpocs, numBatchSize, trainingPath, testingPath, height, width, mode
         m.trainModel(training_d, validation)
     print()
     if output_loc == "Output":
-        m.model.save(os.getcwd() + "/Output/Model")
+        m.model.save(os.getcwd() + "/Output/Model_Version1")
     else:
-        m.model.save(output_loc)
+        m.model.save(output_loc + "/Model_Version1")
     return

@@ -68,28 +68,28 @@ def train(training, testing, batch, epochs, model, height, width, confidence_thr
     if model:
         # if mode is not in correct directory throw an exception
         if not os.path.isdir(model):
-            raise Exception("Model is not in a directory.")
+            raise ValueError("Model is not in a directory.")
         elif not os.path.exists(model):
-            raise Exception("This path does not exist.")
+            raise FileNotFoundError("This path does not exist.")
         modelV = model
         print(model)
     if training:
         # if mode is not in correct directory throw an exception
         if not os.path.isdir(training):
-            raise Exception("Training data set is not in a directory.")
+            raise ValueError("Training data set is not in a directory.")
         elif not os.path.exists(training):
-            raise Exception("This path does not exist.")
+            raise FileNotFoundError("This path does not exist.")
         trainingV = training
         print(training)
     if testing:
         # if mode is not in correct directory throw an exception
         if not os.path.isdir(testing):
-            raise Exception("The testing data set is not in a directory.")
+            raise ValueError("The testing data set is not in a directory.")
         elif not os.path.exists(testing):
-            raise Exception("This path does not exist.")
+            raise FileNotFoundError("This path does not exist.")
         testingV = testing
         print(testing)
-
+    print("ADS")
     #run.runTraining(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outputV, saveV)
     training_command.run(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outputV,saveV)
     print("Train")
@@ -145,34 +145,34 @@ def predict(training, testing, batch, epochs, model, height, width, confidence_t
 
     if output:
         if not os.path.isdir(output):
-            raise Exception("Model is not in a directory.")
+            raise ValueError("Model is not in a directory.")
         elif not os.path.exists(output):
-            raise Exception("This path does not exist.")
+            raise FileNotFoundError("This path does not exist.")
         outputV = output
         #print(output)
 
     if model:
         # if mode is not in correct directory throw an exception
         if not os.path.isdir(model):
-            raise Exception("Model is not in a directory.")
+            raise ValueError("Model is not in a directory.")
         elif not os.path.exists(model):
-            raise Exception("This path does not exist.")
+            raise FileNotFoundError("This path does not exist.")
         modelV = model
         #print(model)
     if training:
         # if mode is not in correct directory throw an exception
         if not os.path.isdir(training):
-            raise Exception("Training data set is not in a directory.")
+            raise ValueError("Training data set is not in a directory.")
         elif not os.path.exists(training):
-            raise Exception("This path does not exist.")
+            raise FileNotFoundError("This path does not exist.")
         trainingV = training
         #print(training)
     if testing:
         # if mode is not in correct directory throw an exception
         if not os.path.isdir(testing):
-            raise Exception("The testing data set is not in a directory.")
+            raise ValueError("The testing data set is not in a directory.")
         elif not os.path.exists(testing):
-            raise Exception("This path does not exist.")
+            raise FileNotFoundError("This path does not exist.")
         testingV = testing
         #print(testing)
 

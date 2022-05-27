@@ -3,6 +3,7 @@ Name: image-classifier-cli
 Version: 0.0.1
 Summary: Hello Template is a quick example and template for easily starting a pypi project.
 Home-page: https://github.com/rutheferd/hello
+Download-URL: 
 Author: Austin Ruth
 Author-email: aruth3@gatech.edu
 License: Apache 2.0

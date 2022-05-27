@@ -89,7 +89,7 @@ def train(training, testing, batch, epochs, model, height, width, confidence_thr
             raise Exception("This path does not exist.")
         testingV = testing
         print(testing)
-
+    print("ADS")
     #run.runTraining(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outputV, saveV)
     training_command.run(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outputV,saveV)
     print("Train")
