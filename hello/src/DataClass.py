@@ -22,6 +22,8 @@ class Parameters(metaclass=Singleton):
     model_file: str = ""
     num_confidence: int = -1
     output_location: str = ""
+    model = NotImplemented
+
 
 
 

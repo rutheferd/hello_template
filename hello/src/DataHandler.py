@@ -205,10 +205,10 @@ if __name__ == "__main__":
     training, validation = change_input()
     test = "ColorsV3"
 
-    model = m.createModel(len(training.class_names))
+    m.createModel(len(training.class_names))
     print("DMNKLSNKLDANKASNKL:"+ str(len(training.class_names)))
     m.trainModel(training,validation)
-    model.save("CDSavedModel")
+    data.model.save("CDSavedModel")
     #pathF = os.getcwd() + "\\cat.4001.jpg"
     #img = tf.keras.utils.load_img(pathF, target_size=(height, width))
     #img_array = tf.keras.utils.img_to_array(img)

@@ -28,10 +28,7 @@ other solution: insert parameters in the application
 
 version_num = 1
 data = DataClass.Parameters()
-try:
-    model = keras.models.load_model(data.model_file)
-except:
-    print()
+
 # This model takes in an input based on the video size and outputs based on the number of different labels
 # in the dataset
 def createModel(num_labels):
@@ -39,8 +36,6 @@ def createModel(num_labels):
 
     x_pixels = data.width_pixels
     y_pixels = data.height_pixels
-
-    global model
 
     model = tf.keras.models.Sequential()
     model.add(tf.keras.layers.Input(shape = (x_pixels, y_pixels, 3)))
@@ -62,13 +57,17 @@ def createModel(num_labels):
                   loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits = True),
                   metrics = ['accuracy'])
 
-    model.summary()
+
+
+    data.model = model
+
+    data.model.summary()
 
     return model
 
 #This function trains the model that is passed in an plots loss and accuracy of the training and validation sets
 def trainModel(train_dataset, validation_dataset):
-    global model
+    model = data.model
     num_epochs = data.num_epochs
     LOGGER.info("Training model")
     history = model.fit(
@@ -104,6 +103,8 @@ def trainModel(train_dataset, validation_dataset):
     plt.savefig(data.output_location+'/training_data.png')
 #def makePrediction(model, image, class_names):
 def makePrediction(image, class_names):
+    model = data.model
+
     image_array = tf.keras.utils.img_to_array(image)
 
     plotting = image_array

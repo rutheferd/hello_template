@@ -9,3 +9,5 @@ matplotlib
 opencv-python
 numpy
 mdutils
+pytest
+tensorflow-datasets

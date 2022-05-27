@@ -19,7 +19,6 @@ def main():
 @main.command()
 @click.option( "--model", "-m", type=click.STRING, help="If a model exists then use the model that will be tested.")
 @click.option("--training","-tr",type=click.STRING,required=True,help="Adds the data that the model will be trained on.")
-@click.option("--testing","-te",type=click.STRING,help = "Adds the data that the model will be tested on.")
 @click.option("--epochs","-e",type=int,help = "Changes the number of epochs that will be done during training.")
 @click.option("--batch","-b",type=int,help = "Changes the batch number that will be used during training.")
 @click.option("--height","-h",type=int,help = "Changes the height of the images during training.")
@@ -27,7 +26,7 @@ def main():
 @click.option("--width","-w",type=int,help = "Changes the width of the images during training.")
 @click.option("--output","-o",type=click.STRING,help="Changes where the file will be created to store analysis about the model creation process.")
 @click.option("--save_model", "-sm", type=click.STRING, help="Location of where the model will be saved if you want to save the model.")
-def train(training, testing, batch, epochs, model, height, width, confidence_threshold, output, save_model):
+def train(training, batch, epochs, model, height, width, confidence_threshold, output, save_model):
     # Make a call to the model if it needs to be trained and saved somewhere
     print(epochs)
     epochsV = 8
@@ -42,7 +41,6 @@ def train(training, testing, batch, epochs, model, height, width, confidence_thr
     saveV = ""
 
     print("Training", training)
-    print("Testing", testing)
 
 
     if save_model:
@@ -81,14 +79,6 @@ def train(training, testing, batch, epochs, model, height, width, confidence_thr
             raise FileNotFoundError("This path does not exist.")
         trainingV = training
         print(training)
-    if testing:
-        # if mode is not in correct directory throw an exception
-        if not os.path.isdir(testing):
-            raise ValueError("The testing data set is not in a directory.")
-        elif not os.path.exists(testing):
-            raise FileNotFoundError("This path does not exist.")
-        testingV = testing
-        print(testing)
     print("ADS")
     #run.runTraining(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outputV, saveV)
     training_command.run(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outputV,saveV)

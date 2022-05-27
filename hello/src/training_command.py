@@ -71,6 +71,7 @@ def train(numEpocs, numBatchSize, trainingPath, testingPath, height, width, mode
     d.output_location = output_loc
 
     if modelPath == "":
+        print("IF")
         training_d, validation = DH.change_input()
         if conf_thresh_val == -1:
             conf_thresh_val = 1 / len(training_d.class_names)
@@ -80,6 +81,7 @@ def train(numEpocs, numBatchSize, trainingPath, testingPath, height, width, mode
         model_name = "Model_Version1"
     else:
         model_name = data.model_file.rsplit('/',1)[-1]
+        model_name = model_name.rsplit('\\',1)[-1]
         global version_num
         if(model_name.__contains__("Version")):
             version_num = model_name[model_name.index("Version") + 7]
@@ -91,13 +93,12 @@ def train(numEpocs, numBatchSize, trainingPath, testingPath, height, width, mode
         if conf_thresh_val == -1:
             conf_thresh_val = 1 / len(training_d.class_names)
         d.num_confidence = conf_thresh_val
-        m.model = keras.models.load_model(modelPath)
-        m.model.summary()
+        data.model = keras.models.load_model(modelPath)
+        data.model.summary()
         m.trainModel(training_d, validation)
 
-    print()
     if output_loc == "Output":
-        m.model.save(os.getcwd() + "/Output/" + model_name)
+        data.model.save(os.getcwd() + "/Output/" + model_name)
     else:
-        m.model.save(output_loc + "/" + model_name)
+        data.model.save(output_loc + "/" + model_name)
     return
