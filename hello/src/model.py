@@ -68,6 +68,7 @@ def createModel(num_labels):
 
 #This function trains the model that is passed in an plots loss and accuracy of the training and validation sets
 def trainModel(train_dataset, validation_dataset):
+    global model
     num_epochs = data.num_epochs
     LOGGER.info("Training model")
     history = model.fit(
@@ -75,6 +76,7 @@ def trainModel(train_dataset, validation_dataset):
         validation_data =validation_dataset,
         epochs = num_epochs
     )
+
     #I can understand only what's self-explanitory
     LOGGER.info("Finished Training")
     LOGGER.info("Plotting accuracy and loss of training and validation data")
@@ -100,7 +102,6 @@ def trainModel(train_dataset, validation_dataset):
     plt.legend(loc='upper right')
     plt.title('Training and Validation Loss')
     plt.savefig(data.output_location+'/training_data.png')
-    plt.show()
 #def makePrediction(model, image, class_names):
 def makePrediction(image, class_names):
     image_array = tf.keras.utils.img_to_array(image)

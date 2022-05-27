@@ -21,11 +21,14 @@ def run(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outp
     print("I am hereeee")
     if outputV == "Output":
         #had to add this because if the output file didn't exist, it would fail
+        # try:
+        #     shutil.rmtree(outputV)
+        # except:
+        #     print("No output file found. Making one.")
         try:
-            shutil.rmtree(outputV)
+            os.mkdir("Output")
         except:
-            print("No output file found. Making one.")
-        os.mkdir("Output")
+            print("Output file exists")
         """for f in os.listdir("Output"):
             if os.path.isdir(outputV+"/"+f):
                 shutil.rmtree(outputV+"/"+f)
@@ -74,6 +77,7 @@ def train(numEpocs, numBatchSize, trainingPath, testingPath, height, width, mode
         d.num_confidence = conf_thresh_val
         m.createModel(len(training_d.class_names))
         m.trainModel(training_d, validation)
+        model_name = "Model_Version1"
     else:
         model_name = data.model_file.rsplit('/',1)[-1]
         global version_num
@@ -88,11 +92,12 @@ def train(numEpocs, numBatchSize, trainingPath, testingPath, height, width, mode
             conf_thresh_val = 1 / len(training_d.class_names)
         d.num_confidence = conf_thresh_val
         m.model = keras.models.load_model(modelPath)
-        model.summary()
+        m.model.summary()
         m.trainModel(training_d, validation)
+
     print()
     if output_loc == "Output":
-        m.model.save(os.getcwd() + "/Output/Model_Version1")
+        m.model.save(os.getcwd() + "/Output/" + model_name)
     else:
-        m.model.save(output_loc + "/Model_Version1")
+        m.model.save(output_loc + "/" + model_name)
     return

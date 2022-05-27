@@ -30,9 +30,7 @@ def predict(numEpocs, numBatchSize, trainingPath, testingPath, height, width, mo
     print("testing in runfile.")
 
     if output_loc == "Output":
-        shutil.rmtree(output_loc)
-        os.mkdir("Output")
-
+        print("Bleh")
     # set the data here
     d = DataClass.Parameters()
     d.num_epochs = numEpocs
@@ -50,8 +48,10 @@ def predict(numEpocs, numBatchSize, trainingPath, testingPath, height, width, mo
         #training_d, validation = DH.change_input()
         numClasses = list()
         for i in os.listdir(testingPath):
-            if os.path.isdir(i):
+            #Fixed bug here where num classes would be empty due to i alone not being a valid directory
+            if os.path.isdir(testingPath + "/" + i):
                 numClasses.append(i)
+        print(numClasses)
         if conf_thresh_val == -1:
             conf_thresh_val = 1 / len(numClasses)
         d.num_confidence = conf_thresh_val
