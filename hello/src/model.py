@@ -51,7 +51,7 @@ def createModel(num_labels):
     model.add(tf.keras.layers.Dense(units=64, activation='relu'))
     model.add(tf.keras.layers.Dense(units = num_labels))
 
-    LOGGER.info("Compiling model")
+    LOGGER.info("Generating model")
 
     model.compile(optimizer = 'adam',
                   loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits = True),

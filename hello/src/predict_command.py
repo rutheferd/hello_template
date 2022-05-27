@@ -13,22 +13,21 @@ try:
 except:
     print()
 
-def run(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outputV,saveV):
-
-    predict(epochsV, batchV, testingV, heightV, widthV, modelV, ctV, outputV,saveV)
+def run(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outputV,saveV, make_reportV):
     logging.basicConfig(
         format="[%(asctime)s] %(levelname)s: %(message)s",
         datefmt="%m/%d/%Y %I:%M:%S %p",
-        filename=outputV+"/logs.log",
+        filename=outputV+"dasdasa/logs.log",
         level=logging.INFO
     )
     LOGGER = logging.getLogger()
     LOGGER.info('Master runs')
+    predict(epochsV, batchV, testingV, heightV, widthV, modelV, ctV, outputV,saveV, make_reportV)
+
     return
 
-def predict(numEpocs, numBatchSize, testingPath, height, width, modelPath, conf_thresh_val, output_loc, saveV):
+def predict(numEpocs, numBatchSize, testingPath, height, width, modelPath, conf_thresh_val, output_loc, saveV, make_reportV):
     print("testing in runfile.")
-
     if output_loc == "Output":
         print("Bleh")
     # set the data here
@@ -41,6 +40,7 @@ def predict(numEpocs, numBatchSize, testingPath, height, width, modelPath, conf_
     d.model_file = modelPath
     d.output_location = output_loc
     d.model = keras.models.load_model(d.model_file)
+    d.make_report = make_reportV
     if modelPath == "":
         raise Exception("You must have a model to predict values.")
 

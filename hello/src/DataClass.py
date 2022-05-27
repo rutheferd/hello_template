@@ -23,6 +23,7 @@ class Parameters(metaclass=Singleton):
     num_confidence: int = -1
     output_location: str = ""
     model = NotImplemented
+    make_report = True
 
 
 

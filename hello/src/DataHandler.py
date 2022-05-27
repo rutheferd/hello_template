@@ -138,12 +138,7 @@ def categorize(confidence_threshold, class_names):
              + str(confidence_threshold * 100) + "% confident",f))
         logger.info("Cleared more than confidence threshold directory")"""
     LOGGER.info("Making predictions on test dataset and organizing entries into confidence directories")
-    mdFile = MdUtils(file_name=data.output_location+"/Confidence and Accuracy Report", title="Confidence and Accuracy Report")
 
-    mdFile.new_header(level = 1 ,title = "Model version number " + str(m.version_num))
-
-    mdFile.new_header(level=1, title="Threshold Value")
-    mdFile.new_paragraph("The threshold value is "+ str(confidence_threshold*100)+ "." )
     above_threshold = list()
     below_threshold = list()
     print("list",testing_directory_name)
@@ -162,28 +157,36 @@ def categorize(confidence_threshold, class_names):
     #print("AT", above_threshold)
     above_avg_accuracy, above_avg_confidence = caluclate_average(above_threshold)
     below_avg_accuracy, below_avg_confidence = caluclate_average(below_threshold)
-    mdFile.new_header(level=2, title="Confidence/Accuracy Above the Threshold")
-    mdFile.new_paragraph("The average confidence level above the threshold is: " + str(above_avg_confidence))
-    mdFile.new_paragraph("The average accuracy level above the threshold is: " + str(above_avg_accuracy))
-    mdFile.new_paragraph("The data is in Appendix A")
+    if(data.make_report):
+        mdFile = MdUtils(file_name=data.output_location+"/Confidence and Accuracy Report", title="Confidence and Accuracy Report")
 
-    mdFile.new_header(level=3, title="Confidence/Accuracy Below the Threshold")
-    mdFile.new_paragraph("The average confidence level below the threshold is: " + str(below_avg_confidence))
-    mdFile.new_paragraph("The average accuracy level below the threshold is: " + str(below_avg_accuracy))
-    mdFile.new_paragraph("The data is in Appendix B")
+        mdFile.new_header(level = 1 ,title = "Model version number " + str(m.version_num))
 
-    mdFile.new_header(level = 2, title = "Training Accuracy and Loss for Validation vs Training data")
-    mdFile.new_line(mdFile.new_inline_image(text="training_data.png", path = "training_data.png"))
+        mdFile.new_header(level=1, title="Threshold Value")
+        mdFile.new_paragraph("The threshold value is "+ str(confidence_threshold*100)+ "." )
+        mdFile.new_header(level=2, title="Confidence/Accuracy Above the Threshold")
+        mdFile.new_paragraph("The average confidence level above the threshold is: " + str(above_avg_confidence))
+        mdFile.new_paragraph("The average accuracy level above the threshold is: " + str(above_avg_accuracy))
+        mdFile.new_paragraph("The data is in Appendix A")
 
-    mdFile.new_header(level=2, title="Appendix A")
-    for i in above_threshold:
-        mdFile.write("Path to Image: "+ str(i[3])+"\t"+"Confidence Level: " + str(i[0])+"\t"+"Predicted Label: "+str(i[1])+"\t"+"Actual Label: "+str(i[2])+"\n")
+        mdFile.new_header(level=3, title="Confidence/Accuracy Below the Threshold")
+        mdFile.new_paragraph("The average confidence level below the threshold is: " + str(below_avg_confidence))
+        mdFile.new_paragraph("The average accuracy level below the threshold is: " + str(below_avg_accuracy))
+        mdFile.new_paragraph("The data is in Appendix B")
 
-    mdFile.new_header(level=2, title="Appendix B")
-    for i in below_threshold:
-        mdFile.write("Path to Image: "+ str(i[3])+"\t"+"Confidence Level: " + str(i[0])+"\t"+"Predicted Label: "+str(i[1])+"\t"+"Actual Label: "+str(i[2])+"\n")
-        
-    mdFile.create_md_file()
+        mdFile.new_header(level = 2, title = "Training Accuracy and Loss for Validation vs Training data")
+        mdFile.new_line(mdFile.new_inline_image(text="training_data.png", path = "training_data.png"))
+
+        mdFile.new_header(level=2, title="Appendix A")
+        for i in above_threshold:
+            mdFile.write("Path to Image: "+ str(i[3])+"\t"+"Confidence Level: " + str(i[0])+"\t"+"Predicted Label: "+str(i[1])+"\t"+"Actual Label: "+str(i[2])+"\n")
+
+        mdFile.new_header(level=2, title="Appendix B")
+        for i in below_threshold:
+            mdFile.write("Path to Image: "+ str(i[3])+"\t"+"Confidence Level: " + str(i[0])+"\t"+"Predicted Label: "+str(i[1])+"\t"+"Actual Label: "+str(i[2])+"\n")
+
+        mdFile.create_md_file()
+        LOGGER.info("Report generated")
     LOGGER.info("Finished predicting test data ")
 
 def caluclate_average(threshold_list):
@@ -216,6 +219,5 @@ if __name__ == "__main__":
 
 
     #gathering_data_confidence(training, height, width, model)
-
 
 

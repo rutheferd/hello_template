@@ -94,9 +94,10 @@ def train(training, batch, epochs, model, height, width, confidence_threshold, o
 @click.option("--confidence_threshold","-ct",type=int,help = "Changes the height of the images during training.")
 @click.option("--width","-w",type=int,help = "Changes the width of the images during training.")
 @click.option("--output","-o",type=click.STRING,help="Changes where the file will be created to store analysis about the model creation process.")
-@click.option("--save_model", "-sm", type=click.STRING, help="Location of where the model will be saved if you want to save teh model.")
+@click.option("--save_model", "-sm", type=click.STRING, help="Location of where the model will be saved if you want to save the model.")
+@click.option("--nr", is_flag = True)
 
-def predict( testing, batch, epochs, model, height, width, confidence_threshold, output,save_model):
+def predict( testing, batch, epochs, model, height, width, confidence_threshold, output,save_model, nr):
     # Make a call to the model if it needs to be trained and saved somewhere
     print(epochs)
     epochsV = 8
@@ -109,6 +110,7 @@ def predict( testing, batch, epochs, model, height, width, confidence_threshold,
     ctV = -1
     outputV = "Output"
     saveV = ""
+    make_reportV = True
 
     print("Testing", testing)
 
@@ -130,7 +132,6 @@ def predict( testing, batch, epochs, model, height, width, confidence_threshold,
     if width:
         widthV = width
         # print(weightV)
-
     if output:
         if not os.path.isdir(output):
             raise ValueError("Model is not in a directory.")
@@ -155,9 +156,12 @@ def predict( testing, batch, epochs, model, height, width, confidence_threshold,
             raise FileNotFoundError("This path does not exist.")
         testingV = testing
         #print(testing)
+    if nr:
+        make_reportV = False
+
 
     #runTesting()
-    predict_command.run(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outputV,saveV)
+    predict_command.run(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outputV,saveV, make_reportV)
     print("test")
     return
 
