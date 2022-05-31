@@ -100,7 +100,8 @@ def trainModel(train_dataset, validation_dataset):
     plt.plot(epochs_range, val_loss, label='Validation Loss')
     plt.legend(loc='upper right')
     plt.title('Training and Validation Loss')
-    plt.savefig(data.output_location+'/training_data.png')
+    data.plot = plt
+
 #def makePrediction(model, image, class_names):
 def makePrediction(image, class_names):
     model = data.model

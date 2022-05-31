@@ -174,9 +174,12 @@ def categorize(confidence_threshold, class_names):
         mdFile.new_paragraph("The average accuracy level below the threshold is: " + str(below_avg_accuracy))
         mdFile.new_paragraph("The data is in Appendix B")
 
-        mdFile.new_header(level = 2, title = "Training Accuracy and Loss for Validation vs Training data")
-        mdFile.new_line(mdFile.new_inline_image(text="training_data.png", path = "training_data.png"))
-
+        #Check if training file exist in model
+        if os.path.exists(data.model_file + "/train_data.png"):
+            mdFile.new_header(level = 2, title = "Training Accuracy and Loss for Validation vs Training data")
+            mdFile.new_line(mdFile.new_inline_image(text="train_data.png", path = data.model_file +  "/train_data.png"))
+        else:
+            print("data image not found")
         mdFile.new_header(level=2, title="Appendix A")
         for i in above_threshold:
             mdFile.write("Path to Image: "+ str(i[3])+"\t"+"Confidence Level: " + str(i[0])+"\t"+"Predicted Label: "+str(i[1])+"\t"+"Actual Label: "+str(i[2])+"\n")

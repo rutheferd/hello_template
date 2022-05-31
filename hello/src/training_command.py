@@ -99,6 +99,8 @@ def train(numEpocs, numBatchSize, trainingPath, testingPath, height, width, mode
 
     if output_loc == "Output":
         data.model.save(os.getcwd() + "/Output/" + model_name)
+        data.plot.savefig(os.getcwd() + "/Output/" + model_name +"/train_data.png")
     else:
         data.model.save(output_loc + "/" + model_name)
+        data.plot.savefig(output_loc + "/" + model_name +"/train_data.png")
     return

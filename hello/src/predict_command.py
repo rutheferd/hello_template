@@ -14,15 +14,17 @@ except:
     print()
 
 def run(epochsV, batchV, trainingV, testingV, heightV, widthV, modelV, ctV, outputV,saveV, make_reportV):
+    for handler in logging.root.handlers[:]:
+        logging.root.removeHandler(handler)
     logging.basicConfig(
         format="[%(asctime)s] %(levelname)s: %(message)s",
         datefmt="%m/%d/%Y %I:%M:%S %p",
-        filename=outputV+"dasdasa/logs.log",
+        filename= outputV + "/logs.log",
         level=logging.INFO
     )
     LOGGER = logging.getLogger()
-    LOGGER.info('Master runs')
     predict(epochsV, batchV, testingV, heightV, widthV, modelV, ctV, outputV,saveV, make_reportV)
+    LOGGER.info('Master runs')
 
     return
 
@@ -59,9 +61,9 @@ def predict(numEpocs, numBatchSize, testingPath, height, width, modelPath, conf_
         #model.summary()
         #m.trainModel(training_d, validation)
         DH.categorize(d.num_confidence, numClasses)
-
-    if output_loc == "Output":
-        m.model.save(os.getcwd() + "/Output/Model")
-    else:
-        m.model.save(output_loc)
+    if saveV:
+        if output_loc == "Output":
+            m.model.save(os.getcwd() + "/Output/Model")
+        else:
+            m.model.save(output_loc + "/Model")
     return

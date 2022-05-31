@@ -24,6 +24,7 @@ class Parameters(metaclass=Singleton):
     output_location: str = ""
     model = NotImplemented
     make_report = True
+    plot = NotImplemented
 
 
 

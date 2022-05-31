@@ -25,7 +25,7 @@ def main():
 @click.option("--confidence_threshold","-ct",type=int,help = "Changes the height of the images during training.")
 @click.option("--width","-w",type=int,help = "Changes the width of the images during training.")
 @click.option("--output","-o",type=click.STRING,help="Changes where the file will be created to store analysis about the model creation process.")
-@click.option("--save_model", "-sm", type=click.STRING, help="Location of where the model will be saved if you want to save the model.")
+@click.option("--save_model", "-sm", type=bool, help="Whether or not you would like to save the model (True or False).")
 def train(training, batch, epochs, model, height, width, confidence_threshold, output, save_model):
     # Make a call to the model if it needs to be trained and saved somewhere
     print(epochs)
@@ -94,7 +94,7 @@ def train(training, batch, epochs, model, height, width, confidence_threshold, o
 @click.option("--confidence_threshold","-ct",type=int,help = "Changes the height of the images during training.")
 @click.option("--width","-w",type=int,help = "Changes the width of the images during training.")
 @click.option("--output","-o",type=click.STRING,help="Changes where the file will be created to store analysis about the model creation process.")
-@click.option("--save_model", "-sm", type=click.STRING, help="Location of where the model will be saved if you want to save the model.")
+@click.option("--save_model", "-sm", type=bool, help="Whether or not you would like to save the model (True or False).")
 @click.option("--nr", is_flag = True)
 
 def predict( testing, batch, epochs, model, height, width, confidence_threshold, output,save_model, nr):
