@@ -1,2 +1,5 @@
 /.pytest_cache
 /.vscode
+/build
+/dist
+/hello_template.egg-info
