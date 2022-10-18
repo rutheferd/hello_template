@@ -5,7 +5,7 @@ from hello.src import there_command
 @click.group()
 @click.version_option(package_name="hello_template")
 def main():
-    """Hello is a CLI tool for creating a custom greeting to send to friend."""
+    """This is our new tool that will handle the stonesoup data generation."""
     pass
 
 
@@ -14,22 +14,22 @@ def main():
 @click.option(
     # Notice that this has the is_flag option, this means that only the marker
     # will be used to trigger this option.
-    "--greeting",
-    "-g",
+    "--plot",
+    "-p",
     is_flag=True,
-    help="Adds a greeting to the final output",
+    help="Plots the final output",
 )
 @click.option(
-    "--name",
-    "-n",
-    type=click.STRING,
+    "--seed",
+    "-s",
+    type=click.INT,
     required=True,
-    help="Adds the name to the final output.",
+    help="The seed for the generation randomization",
 )
 @main.command()
-def there(name, greeting):
+def generate(seed, plot):
     """Create a Greeting to Send to a Friend!"""
-    there_command.run(name, greeting)
+    there_command.run(seed, plot)
 
 
 if __name__ == "__main__":

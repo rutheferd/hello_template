@@ -3,3 +3,6 @@ black
 flake8
 pre-commit
 setuptools
+stonesoup
+plotly
+kaleido

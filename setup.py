@@ -13,7 +13,10 @@ install_requires = [
     'black',
     'flake8',
     'pre-commit',
-    'setuptools'
+    'setuptools',
+    'stonesoup',
+    'plotly',
+    'kaleido'
 ]
 
 setup(
