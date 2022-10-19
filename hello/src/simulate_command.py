@@ -16,7 +16,7 @@ logging.basicConfig(
     level=logging.INFO,
 )
 
-def simulate(truths_path, save_path='./sim.png'):
+def simulate(truths_path, save_path='./sim.txt'):
 
     logging.info("Reading File...")
     with open(truths_path,'rb') as f:
@@ -51,13 +51,22 @@ def simulate(truths_path, save_path='./sim.png'):
                 measurement_set.add(Clutter(np.array([[x], [y]]), timestamp=truth[k].timestamp,
                                             measurement_model=measurement_model))
         all_measurements.append(measurement_set)
-    
+
+    # Plot true detections and clutter.
     plotter = Plotterly()
     plotter.plot_ground_truths(truths, [0, 2])
     plotter.plot_measurements(all_measurements, [0, 2])
-    logging.info(all_measurements)
-    plotter.fig.write_image(save_path)
-    logging.info("Plot Image Saved!")
+    plotter.fig.write_image("sim.png")
+    
+    with open(save_path,'wb') as f:
+        pickle.dump(all_measurements, f)
+    
+    # plotter = Plotterly()
+    # plotter.plot_ground_truths(truths, [0, 2])
+    # plotter.plot_measurements(all_measurements, [0, 2])
+    # logging.info(all_measurements)
+    # plotter.fig.write_image(save_path)
+    # logging.info("Plot Image Saved!")
 
 def run(truths_path, save_path):
     simulate(truths_path=truths_path, save_path=save_path)

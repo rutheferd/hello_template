@@ -1,5 +1,6 @@
+from email.policy import default
 import click
-from hello.src import simulate_command, there_command
+from hello.src import simulate_command, there_command, kalman_command
 
 
 @click.group()
@@ -45,6 +46,7 @@ def generate(seed, plot):
 @click.option(
     "--save_path",
     "-s",
+    default="./sim.txt",
     type=click.STRING,
     help="The seed for the generation randomization",
 )
@@ -52,6 +54,13 @@ def generate(seed, plot):
 def simulate(truths_path, save_path):
     """Create a Greeting to Send to a Friend!"""
     simulate_command.run(truths_path=truths_path, save_path=save_path)
+    pass
+
+
+@main.command()
+def track():
+    """Create a Greeting to Send to a Friend!"""
+    kalman_command.run()
     pass
 
 
