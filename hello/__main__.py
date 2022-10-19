@@ -1,5 +1,5 @@
 import click
-from hello.src import there_command
+from hello.src import simulate_command, there_command
 
 
 @click.group()
@@ -30,6 +30,29 @@ def main():
 def generate(seed, plot):
     """Create a Greeting to Send to a Friend!"""
     there_command.run(seed, plot)
+    pass
+
+
+@click.option(
+    # Notice that this has the is_flag option, this means that only the marker
+    # will be used to trigger this option.
+    "--truths_path",
+    "-t",
+    type=click.STRING,
+    required=True,
+    help="Plots the final output",
+)
+@click.option(
+    "--save_path",
+    "-s",
+    type=click.STRING,
+    help="The seed for the generation randomization",
+)
+@main.command()
+def simulate(truths_path, save_path):
+    """Create a Greeting to Send to a Friend!"""
+    simulate_command.run(truths_path=truths_path, save_path=save_path)
+    pass
 
 
 if __name__ == "__main__":
